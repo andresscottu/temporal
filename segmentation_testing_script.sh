@@ -6,12 +6,6 @@ IP=$(ip a | grep -oP 'inet \K10\.\d+\.\d+\.\d+' | head -n 1)
 # Redirigir stdout y stderr a archivo
 exec > >(tee "origen_${IP}.log") 2>&1
 
-
-
-
-
-
-
 # Definicion colores 
 
 BLUE='\033[1;34m'
@@ -68,7 +62,7 @@ for i in "${!segments[@]}"; do
 	echo
     sudo nmap -sS --min-rate 5000 -Pn -n "$segment" -oN "$output_nmap"
 
-    if grep -E "open|filtered" "$output_nmap" > /dev/null; then
+    if grep -E  "^[0-9]+/(tcp|udp)[[:space:]]+(open|filtered|open\|filtered)[[:space:]]+"  "$output_nmap" > /dev/null; then
 		echo
         echo -e "${RED}[ALERTA] Puertos abiertos o filtrados en $segment${NC}"
 		echo
