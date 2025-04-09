@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Obtener la IP local
+IP=$(ip a | grep -oP 'inet \K10\.\d+\.\d+\.\d+' | head -n 1)
+
+# Redirigir stdout y stderr a archivo
+exec > >(tee "origen_${IP}.log") 2>&1
+
+
+
+
+
+
+
 # Definicion colores 
 
 BLUE='\033[1;34m'
